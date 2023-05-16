@@ -1,0 +1,13 @@
+body .form-control.is-valid, .was-validated .form-control:valid {
+  border-color: var(--bs-border-color);
+  padding-right: .75rem;
+  background: unset;
+}
+
+.app-drag {
+  -webkit-app-region: drag;
+}
+
+.app-no-drag {
+  -webkit-app-region: no-drag;
+}

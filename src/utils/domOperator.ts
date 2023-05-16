@@ -1,0 +1,31 @@
+export function domOperator<T = HTMLElement>(selector?) {
+    let els;
+    switch (typeof selector) {
+        case "string":
+            els = document.querySelectorAll(selector);
+            break;
+        case "object":
+            els = [selector ?? window];
+            break;
+        case "function":
+            window.addEventListener('DOMContentLoaded', selector);
+            break;
+    }
+
+    const $ = {
+        on: (e: keyof HTMLElementEventMap | string, listener: <G>(this: T, evt: Event) => void) => {
+                els?.forEach(item => item.addEventListener(e, listener.bind(item)));
+            return $;
+        },
+        get: (index = 0) => els[index],
+        value: (v) => {
+            if (els?.[0]) {
+                els[0].value = v;
+                els[0].dispatchEvent(new Event('change'))
+            }
+            return $;
+        },
+        serialize: () => Object.fromEntries(new FormData(els[0]))
+    }
+    return $;
+}

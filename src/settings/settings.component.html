@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Настройки</title>
+</head>
+<body>
+
+<nav class="navbar bg-body-tertiary app-drag">
+    <div class="container-fluid">
+        <span class="navbar-brand">Настройки подключения</span>
+        <div class="app-no-drag">
+            <button class="btn app-minimize"><i class="bi bi-box-arrow-in-down-left"></i></button>
+            <button class="btn app-close"><i class="bi bi-x-lg"></i></button>
+        </div>
+    </div>
+</nav>
+<div class="container pt-4">
+    <main>
+        <form class="form needs-validation" novalidate>
+            <div class="row g-3">
+                <div class="input-group input-group-sm">
+                    <button class="btn btn-primary app-choose-cli" type="button">Обзор</button>
+                    <input readonly required class="form-control" name="cli" placeholder="AnyConnect CLI path">
+                </div>
+
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input required class="form-control" name="host" placeholder="Host">
+                        <label>Host</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input required class="form-control" name="group">
+                        <label>Group</label>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input required class="form-control" name="user">
+                        <label>Username</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input required type="password" class="form-control" name="password">
+                        <label>Password</label>
+                    </div>
+                </div>
+
+                <div class="col-8">
+                    <div class="form-floating">
+                        <input required class="form-control" name="secret">
+                        <label>Secret</label>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-floating">
+                        <input required class="form-control" name="pin">
+                        <label>Pin</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 d-flex justify-content-end gap-2">
+                <button class="btn btn-sm app-close btn-secondary" type="button">Отмена</button>
+                <button class="btn btn-sm btn-primary" type="submit">Сохранить</button>
+            </div>
+        </form>
+    </main>
+</div>
+</body>
+</html>
