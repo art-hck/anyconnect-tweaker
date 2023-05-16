@@ -4,62 +4,63 @@
     <meta charset="UTF-8"/>
     <title>Настройки</title>
 </head>
-<body>
+<body class="settings">
 
-<nav class="navbar bg-body-tertiary app-drag">
-    <div class="container-fluid">
-        <span class="navbar-brand">Настройки подключения</span>
-        <div class="app-no-drag">
-            <button class="btn app-minimize"><i class="bi bi-box-arrow-in-down-left"></i></button>
-            <button class="btn app-close"><i class="bi bi-x-lg"></i></button>
-        </div>
+<nav class="navbar navbar-win-dark app-drag">
+    <span class="navbar-text">Настройки подключения</span>
+    <div class="app-no-drag d-flex">
+        <button class="btn btn-dark app-minimize">
+            <i class="bi bi-dash-lg"></i>
+
+        </button>
+        <button class="btn btn-dark app-close"><i class="bi bi-x-lg"></i></button>
     </div>
 </nav>
-<div class="container pt-4">
+<div class="container-md" style="padding-top: 12px; padding-bottom: 12px">
     <main>
         <form class="form needs-validation" novalidate>
-            <div class="row g-3">
+            <div class="row g-4">
                 <div class="input-group input-group-sm">
                     <button class="btn btn-primary app-choose-cli" type="button">Обзор</button>
-                    <input readonly required class="form-control" name="cli" placeholder="AnyConnect CLI path">
+                    <input readonly required class="form-control form-control-sm" name="cli" placeholder="AnyConnect CLI path">
                 </div>
 
                 <div class="col-6">
                     <div class="form-floating">
-                        <input required class="form-control" name="host" placeholder="Host">
+                        <input required class="form-control form-control-sm" name="host" placeholder="host">
                         <label>Host</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-floating">
-                        <input required class="form-control" name="group">
+                        <input required class="form-control form-control-sm" name="group" placeholder="group">
                         <label>Group</label>
                     </div>
                 </div>
 
                 <div class="col-6">
                     <div class="form-floating">
-                        <input required class="form-control" name="user">
+                        <input required class="form-control form-control-sm" name="user" placeholder="user">
                         <label>Username</label>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-floating">
-                        <input required type="password" class="form-control" name="password">
+                        <input required type="password" class="form-control form-control-sm" name="password" placeholder="password">
                         <label>Password</label>
                     </div>
                 </div>
 
                 <div class="col-8">
                     <div class="form-floating">
-                        <input required class="form-control" name="secret">
+                        <input required class="form-control form-control-sm" name="secret" placeholder="secret">
                         <label>Secret</label>
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="form-floating">
-                        <input required class="form-control" name="pin">
+                        <input required class="form-control form-control-sm" name="pin" placeholder="pin">
                         <label>Pin</label>
                     </div>
                 </div>

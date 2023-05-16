@@ -9,8 +9,8 @@ declare const SETTINGS_PRELOAD_WEBPACK_ENTRY: string;
 export class SettingsService {
     readonly storage = new SettingsStorage(path.join(app.getPath('userData'), "/settings"));
     private readonly browserWindow = new BrowserWindow({
-        height: 395,
-        width: 576,
+        height: 307,
+        width: 600,
         autoHideMenuBar: true,
         webPreferences: {
             preload: SETTINGS_PRELOAD_WEBPACK_ENTRY,

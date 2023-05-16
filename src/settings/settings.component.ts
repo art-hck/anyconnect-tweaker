@@ -16,7 +16,7 @@ import { domOperator } from "../utils/domOperator";
 
         $<HTMLFormElement>('.form').on('submit', function (e) {
             e.preventDefault();
-            this.classList.add('was-validated');
+            this.classList.add('app-validated');
             if (this.checkValidity()) {
 
                 ipcRenderer.invoke('submit', $(this).serialize());
