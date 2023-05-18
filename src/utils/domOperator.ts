@@ -17,7 +17,7 @@ export function domOperator<T = HTMLElement>(selector?) {
                 els?.forEach(item => item.addEventListener(e, listener.bind(item)));
             return $;
         },
-        get: (index = 0) => els[index],
+        get: <T = HTMLElement>(index = 0) => els[index] as T,
         value: (v) => {
             if (els?.[0]) {
                 els[0].value = v;

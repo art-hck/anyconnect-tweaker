@@ -12,7 +12,9 @@ import { domOperator } from "../utils/domOperator";
             }
         });
 
-        new URLSearchParams(window.location.search).forEach((value, key) => $('input[name=' + key + ']').value(value));
+        $<HTMLSelectElement>('select[name=algorithm]').on('change', function () {
+            $('.col-pin').get().hidden = this.value === 'sha1';
+        });
 
         $<HTMLFormElement>('.form').on('submit', function (e) {
             e.preventDefault();
@@ -21,6 +23,10 @@ import { domOperator } from "../utils/domOperator";
 
                 ipcRenderer.invoke('submit', $(this).serialize());
             }
-        })
+        });
+
+        new URLSearchParams(window.location.search).forEach((value, key) => {
+            $('[name=' + key + ']').value(value);
+        });
     });
 })(domOperator)

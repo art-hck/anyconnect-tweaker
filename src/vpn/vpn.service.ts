@@ -1,16 +1,18 @@
 import md5 from "md5";
 import child_process, { ChildProcessWithoutNullStreams } from "child_process";
+import { authenticator } from "otplib";
 
 
 export type VpnState = 'connected' | 'disconnected' | 'pending';
 export interface VpnSettings {
     cli: string;
     host: string;
-    group: string;
+    group?: string;
     user: string;
     password: string;
     secret: string;
-    pin: string;
+    pin?: string;
+    algorithm: 'md5' | 'sha1';
 }
 
 export type OnSetState = (state: VpnState) => any;
@@ -20,12 +22,13 @@ export class VpnService implements VpnSettings {
     private status?: VpnState;
     private onSetState: OnSetState;
     cli: string;
-    group: string;
+    group?: string;
     host: string;
     password: string;
-    pin: string;
+    pin?: string;
     secret: string;
     user: string;
+    algorithm: 'md5' | 'sha1';
 
     async init(settings: VpnSettings, onSetState: OnSetState) {
         Object.assign(this, settings);
@@ -36,8 +39,6 @@ export class VpnService implements VpnSettings {
     // HANDLE WRONG CRED & ERROR WHEN CISCO RUNNING
     connect(): void {
         this.setState('pending');
-        const epochTime = +`${+new Date()}`.slice(0, 9);
-        const secondPassword = md5(epochTime + this.secret + this.pin).slice(0, 6);
         if (this.child) this.child.kill();
 
         this.child = child_process.spawn(this.cli, ['-s']);
@@ -46,7 +47,20 @@ export class VpnService implements VpnSettings {
         this.child.stdout.on('data', data => console.log(`${data}`.trim()));
         this.child.addListener('close', () => this.setState('connected'));
 
-        this.child.stdin.write(`connect ${this.host}\n${this.group}\n${this.user}\n${this.password}\n${secondPassword}\n`);
+        const payload = [`connect ${this.host}`];
+        if (this.group) {
+            payload.push(this.group);
+        }
+        payload.push(this.user, this.password);
+        if (this.algorithm === 'md5') {
+            payload.push(md5(`${+new Date()}`.slice(0, 9) + this.secret + this.pin).slice(0, 6))
+        }
+
+        if (this.algorithm === 'sha1') {
+            payload.push(authenticator.generate(this.secret))
+        }
+
+        this.child.stdin.write(payload.join("\n") + "\n");
         this.child.stdin.end();
     }
 

@@ -34,7 +34,7 @@
                 <div class="col-6">
                     <div class="form-floating">
                         <input required class="form-control form-control-sm" name="group" placeholder="group">
-                        <label>Group</label>
+                        <label>Group (optional)</label>
                     </div>
                 </div>
 
@@ -51,14 +51,24 @@
                     </div>
                 </div>
 
-                <div class="col-8">
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select form-select-sm" name="algorithm">
+                            <option value="sha1">Google Auth</option>
+                            <option value="md5">Droid OTP</option>
+                        </select>
+                        <label>Application</label>
+                    </div>
+                </div>
+
+                <div class="col">
                     <div class="form-floating">
                         <input required class="form-control form-control-sm" name="secret" placeholder="secret">
                         <label>Secret</label>
                     </div>
                 </div>
 
-                <div class="col-4">
+                <div class="col col-pin" hidden>
                     <div class="form-floating">
                         <input required class="form-control form-control-sm" name="pin" placeholder="pin">
                         <label>Pin</label>
