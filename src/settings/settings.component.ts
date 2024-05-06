@@ -12,6 +12,19 @@ import { domOperator } from "../utils/domOperator";
             }
         });
 
+        $('.input-type-toggle').on('click', function () {
+            const inputEl = this.previousElementSibling.querySelector('input');
+            if (inputEl.type === 'password') {
+                inputEl.type = 'input';
+                this.querySelector('i').classList.add('bi-eye-fill');
+                this.querySelector('i').classList.remove('bi-eye-slash-fill');
+            } else {
+                inputEl.type = 'password';
+                this.querySelector('i').classList.add('bi-eye-slash-fill');
+                this.querySelector('i').classList.remove('bi-eye-fill');
+            }
+        });
+
         $<HTMLSelectElement>('select[name=algorithm]').on('change', function () {
             $('.col-pin').get().hidden = this.value === 'sha1';
         });
@@ -20,13 +33,13 @@ import { domOperator } from "../utils/domOperator";
             e.preventDefault();
             this.classList.add('app-validated');
             if (this.checkValidity()) {
-
                 ipcRenderer.invoke('submit', $(this).serialize());
             }
         });
 
         new URLSearchParams(window.location.search).forEach((value, key) => {
             $('[name=' + key + ']').value(value);
+            $('[type="checkbox"][name=' + key + ']').checked(true);
         });
     });
 })(domOperator)

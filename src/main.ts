@@ -1,7 +1,7 @@
 import { app, ipcMain } from 'electron';
-import { VpnService, VpnSettings } from "./vpn/vpn.service";
+import { VpnService } from "./vpn/vpn.service";
 import { TrayService } from "./tray/tray.service";
-import { SettingsService } from "./settings/settings.service";
+import { SettingsService, Settings } from "./settings/settings.service";
 
 if (require('electron-squirrel-startup')) {
     app.quit();
@@ -22,9 +22,17 @@ if (!gotTheLock) {
             onSettings: () => settings.show(),
             onClose: () => app.quit(),
         });
-        const vpnInit = (settings: VpnSettings) => vpn.init(settings, state => trayService.update(state));
+        const vpnInit = (settings: Settings) => vpn.init(settings, state => trayService.update(state));
 
-        settings.submit(settings => vpnInit(settings));
+        settings.submit(settings => {
+            vpnInit(settings);
+            if (app.getLoginItemSettings().openAtLogin !== (settings.autostart === 'on')) {
+                app.setLoginItemSettings({
+                    openAtLogin: settings.autostart === 'on',
+                    path: app.getPath("exe")
+                });
+            }
+        });
 
         try {
             vpnInit(await settings.storage.get());

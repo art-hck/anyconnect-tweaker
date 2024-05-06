@@ -45,9 +45,14 @@
                     </div>
                 </div>
                 <div class="col-6">
-                    <div class="form-floating">
-                        <input required type="password" class="form-control form-control-sm" name="password" placeholder="password">
-                        <label>Password</label>
+                    <div class="input-group">
+                        <div class="form-floating">
+                            <input required type="password" class="form-control form-control-sm" name="password" placeholder="password">
+                            <label>Password</label>
+                        </div>
+                        <span class="input-group-text input-type-toggle">
+                            <i class="bi bi-eye-slash-fill"></i>
+                        </span>
                     </div>
                 </div>
 
@@ -62,21 +67,38 @@
                 </div>
 
                 <div class="col">
-                    <div class="form-floating">
-                        <input required class="form-control form-control-sm" name="secret" placeholder="secret">
-                        <label>Secret</label>
+                    <div class="input-group">
+                        <div class="form-floating">
+                            <input required type="password" class="form-control form-control-sm" name="secret" placeholder="secret">
+                            <label>Secret</label>
+                        </div>
+                        <span class="input-group-text input-type-toggle">
+                            <i class="bi bi-eye-slash-fill"></i>
+                        </span>
                     </div>
                 </div>
 
-                <div class="col col-pin" hidden>
-                    <div class="form-floating">
-                        <input required class="form-control form-control-sm" name="pin" placeholder="pin">
-                        <label>Pin</label>
+                <div class="col-3 col-pin" hidden>
+                    <div class="input-group">
+                        <div class="form-floating">
+                            <input required type="password" class="form-control form-control-sm" name="pin" placeholder="pin">
+                            <label>Pin</label>
+                        </div>
+                        <span class="input-group-text input-type-toggle">
+                            <i class="bi bi-eye-slash-fill"></i>
+                        </span>
                     </div>
                 </div>
             </div>
 
             <div class="mt-3 d-flex justify-content-end gap-2">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="autostart" name="autostart">
+                    <label class="form-check-label" for="autostart">
+                        Запускать при старте системы
+                    </label>
+                </div>
+                <div class="flex-grow-1"></div>
                 <button class="btn btn-sm app-close btn-secondary" type="button">Отмена</button>
                 <button class="btn btn-sm btn-primary" type="submit">Сохранить</button>
             </div>

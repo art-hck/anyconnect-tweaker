@@ -63,6 +63,10 @@
     }
   }
 
+  .form-check > label {
+    font-size: 0.875rem;
+  }
+
   .form-floating {
     & > label {
       color: rgba(var(--bs-body-color-rgb), 0.65);
@@ -79,5 +83,10 @@
         transform: scale(0.85) translateY(-.9rem) translateX(0.15rem);
       }
     }
+  }
+
+  .input-type-toggle {
+    line-height: 1.25em;
+    cursor: pointer;
   }
 }

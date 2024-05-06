@@ -1,10 +1,21 @@
 import { app, BrowserWindow, dialog, ipcMain } from "electron";
 import path from "path";
-import { VpnSettings } from "../vpn/vpn.service";
 import { SettingsStorage } from "./settings.storage";
 
 declare const SETTINGS_WEBPACK_ENTRY: string;
 declare const SETTINGS_PRELOAD_WEBPACK_ENTRY: string;
+
+export interface Settings {
+    cli: string;
+    host: string;
+    group?: string;
+    user: string;
+    password: string;
+    secret: string;
+    pin?: string;
+    algorithm: 'md5' | 'sha1';
+    autostart?: 'on';
+}
 
 export class SettingsService {
     readonly storage = new SettingsStorage(path.join(app.getPath('userData'), "/settings"));
@@ -19,7 +30,7 @@ export class SettingsService {
         frame: false,
         show: false
     });
-    private onSubmit: (settings: VpnSettings) => any;
+    private onSubmit: (settings: Settings) => void;
 
     constructor() {
         this.init();
@@ -42,7 +53,7 @@ export class SettingsService {
         });
     }
 
-    submit(cb: (settings: VpnSettings) => any) {
+    submit(cb: (settings: Settings) => void) {
         this.onSubmit = cb;
     }
 

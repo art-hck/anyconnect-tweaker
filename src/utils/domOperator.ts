@@ -18,6 +18,13 @@ export function domOperator<T = HTMLElement>(selector?) {
             return $;
         },
         get: <T = HTMLElement>(index = 0) => els[index] as T,
+        checked: (checked: boolean) => {
+            if (els?.[0]) {
+                els[0].checked = checked;
+                els[0].dispatchEvent(new Event('change'))
+            }
+            return $;
+        },
         value: (v) => {
             if (els?.[0]) {
                 els[0].value = v;

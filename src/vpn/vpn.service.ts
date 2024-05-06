@@ -1,23 +1,16 @@
 import md5 from "md5";
 import child_process, { ChildProcessWithoutNullStreams } from "child_process";
 import { authenticator } from "otplib";
+import { Settings } from "../settings/settings.service";
+import { Notification } from "electron";
 
 
 export type VpnState = 'connected' | 'disconnected' | 'pending';
-export interface VpnSettings {
-    cli: string;
-    host: string;
-    group?: string;
-    user: string;
-    password: string;
-    secret: string;
-    pin?: string;
-    algorithm: 'md5' | 'sha1';
-}
 
-export type OnSetState = (state: VpnState) => any;
 
-export class VpnService implements VpnSettings {
+export type OnSetState = (state: VpnState) => void;
+
+export class VpnService implements Settings {
     private child?: ChildProcessWithoutNullStreams;
     private status?: VpnState;
     private onSetState: OnSetState;
@@ -30,14 +23,14 @@ export class VpnService implements VpnSettings {
     user: string;
     algorithm: 'md5' | 'sha1';
 
-    async init(settings: VpnSettings, onSetState: OnSetState) {
+    async init(settings: Settings, onSetState: OnSetState) {
         Object.assign(this, settings);
         this.onSetState = onSetState
         this.setState(await this.state() ? 'connected' : 'disconnected');
     }
 
-    // HANDLE WRONG CRED & ERROR WHEN CISCO RUNNING
     connect(): void {
+        let errorMessage: string;
         this.setState('pending');
         if (this.child) this.child.kill();
 
@@ -45,7 +38,26 @@ export class VpnService implements VpnSettings {
 
         this.child.stderr.on("data", data => console.error(`${data}`.trim()));
         this.child.stdout.on('data', data => console.log(`${data}`.trim()));
-        this.child.addListener('close', () => this.setState('connected'));
+
+        /**
+         * Handle connection errors
+         */
+        this.child.stdout.on('data', data => {
+            if (`${data}`.includes('error')) {
+                errorMessage = data.toString().replace(/(\r\n|\n|\r)/g, ' ').replace(/.*error: (.+)VPN>.*$/, "$1").trim();
+                this.child.kill();
+            }
+
+            if (`${data}`.includes('Login failed')) {
+                errorMessage = 'Wrong credentials';
+                this.child.kill();
+            }
+        });
+
+        this.child.addListener('close', () => {
+            if (errorMessage) new Notification({ title: 'Connection error', body: errorMessage}).show();
+            this.setState(errorMessage ? 'disconnected' : 'connected')
+        });
 
         const payload = [`connect ${this.host}`];
         if (this.group) {
