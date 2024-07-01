@@ -1,0 +1,20 @@
+:root {
+  --bs-navbar-brand-color: #fff;
+}
+
+.proxy {
+  .list-group-item-primary .btn-outline-danger {
+    visibility: hidden;
+  }
+
+  .list-group-item:not(.list-group-item-primary) .btn {
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 150ms;
+  }
+
+  .list-group-item:hover:not(.list-group-item-primary) .btn {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

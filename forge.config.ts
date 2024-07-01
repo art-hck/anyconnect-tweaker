@@ -28,6 +28,14 @@ const config: ForgeConfig = {
               js: './src/settings/settings.component.ts',
             },
           },
+          {
+            html: './src/proxy/proxy.component.html',
+            js: './src/renderer.ts',
+            name: 'proxy',
+            preload: {
+              js: './src/proxy/proxy.component.ts',
+            },
+          },
         ],
       },
     }),

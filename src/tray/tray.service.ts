@@ -12,6 +12,7 @@ export class TrayService {
         { label: 'Подключиться', visible: false, click: () => this.events.onConnect() },
         { label: 'Отключиться', visible: false, click: () => this.events.onDisconnect() },
         { label: 'Настройки', click: () => this.events.onSettings() },
+        { label: 'Прокси', click: () => this.events.onProxy() },
         { type: 'separator' },
         { label: 'Выход', click: () => this.events.onClose() },
     ]);
@@ -23,6 +24,7 @@ export class TrayService {
         onToggle: () => void,
         onClose: () => void
         onSettings: () => void
+        onProxy: () => void
     }) {
         this.tray.setContextMenu(this.contextMenu);
         this.tray.addListener('double-click', () => this.events.onToggle());

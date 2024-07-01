@@ -14,7 +14,7 @@ export function domOperator<T = HTMLElement>(selector?) {
 
     const $ = {
         on: (e: keyof HTMLElementEventMap | string, listener: <G>(this: T, evt: Event) => void) => {
-                els?.forEach(item => item.addEventListener(e, listener.bind(item)));
+            els?.forEach(item => item.addEventListener(e, listener.bind(item)));
             return $;
         },
         get: <T = HTMLElement>(index = 0) => els[index] as T,
@@ -32,7 +32,7 @@ export function domOperator<T = HTMLElement>(selector?) {
             }
             return $;
         },
-        serialize: () => Object.fromEntries(new FormData(els[0]))
+        serialize: <T>() => Object.fromEntries(new FormData(els[0])) as unknown as T
     }
     return $;
 }

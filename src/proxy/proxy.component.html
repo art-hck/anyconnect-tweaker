@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Прокси серверы</title>
+</head>
+<body class="proxy app-window">
+
+<nav class="navbar navbar-win-dark app-drag">
+    <span class="navbar-text">Прокси серверы</span>
+    <div class="app-no-drag d-flex">
+        <button class="btn btn-dark app-minimize"><i class="bi bi-dash-lg"></i></button>
+        <button class="btn btn-dark app-close"><i class="bi bi-x-lg"></i></button>
+    </div>
+</nav>
+<div class="container-md" style="padding-top: 12px; padding-bottom: 12px">
+    <main>
+        <form class="form needs-validation" novalidate>
+            <div class="row g-4">
+                <div class="col-3">
+                    <div class="form-floating">
+                        <input size="10" required class="form-control form-control-sm" name="name" placeholder="Название">
+                        <label>Название</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input required class="form-control form-control-sm" name="url" placeholder="host">
+                        <label>Host</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-sm btn-primary app-choose-cli">Добавить</button>
+                </div>
+            </div>
+        </form>
+
+        <ul class="list-group app-hosts mt-3">
+            <template id="list-group-item-tpl">
+                <button class="list-group-item list-group-item d-flex align-items-center gap-2">
+                    <span class="list-group-item-index text-secondary">#${index + 1}</span>
+                    <b class="list-group-item-name">${name}</b>
+                    <span class="list-group-item-host text-secondary">${url}</span>
+                    <div class="flex-grow-1"></div>
+                    <a class="list-group-item-remove btn btn-sm btn-outline-danger" type="button"><i class="bi bi-trash3-fill"></i></a>
+                </button>
+            </template>
+        </ul>
+    </main>
+</div>
+</body>
+</html>

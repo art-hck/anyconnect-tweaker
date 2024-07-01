@@ -1,6 +1,6 @@
 import { app, BrowserWindow, dialog, ipcMain } from "electron";
 import path from "path";
-import { SettingsStorage } from "./settings.storage";
+import { Storage } from "../storage";
 
 declare const SETTINGS_WEBPACK_ENTRY: string;
 declare const SETTINGS_PRELOAD_WEBPACK_ENTRY: string;
@@ -18,7 +18,7 @@ export interface Settings {
 }
 
 export class SettingsService {
-    readonly storage = new SettingsStorage(path.join(app.getPath('userData'), "/settings"));
+    readonly storage = new Storage<Settings>(path.join(app.getPath('userData'), "/settings"));
     private readonly browserWindow = new BrowserWindow({
         height: 307,
         width: 600,

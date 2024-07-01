@@ -1,7 +1,8 @@
 import { app, ipcMain } from 'electron';
 import { VpnService } from "./vpn/vpn.service";
 import { TrayService } from "./tray/tray.service";
-import { SettingsService, Settings } from "./settings/settings.service";
+import { Settings, SettingsService } from "./settings/settings.service";
+import { ProxyService } from "./proxy/proxy.service";
 
 if (require('electron-squirrel-startup')) {
     app.quit();
@@ -14,12 +15,14 @@ if (!gotTheLock) {
 } else {
     app.on('ready', async () => {
         const settings = new SettingsService();
+        const proxy = new ProxyService();
         const vpn = new VpnService();
         const trayService = new TrayService({
             onConnect: () => vpn.connect(),
             onDisconnect: () => vpn.disconnect(),
             onToggle: () => vpn.toggle(),
             onSettings: () => settings.show(),
+            onProxy: () => proxy.show(),
             onClose: () => app.quit(),
         });
         const vpnInit = (settings: Settings) => vpn.init(settings, state => trayService.update(state));
