@@ -3,6 +3,7 @@ import child_process, { ChildProcessWithoutNullStreams } from "child_process";
 import { authenticator } from "otplib";
 import { Settings } from "../settings/settings.service";
 import { Notification } from "electron";
+import iconv from 'iconv-lite';
 
 
 export type VpnState = 'connected' | 'disconnected' | 'pending';
@@ -43,12 +44,14 @@ export class VpnService implements Settings {
          * Handle connection errors
          */
         this.child.stdout.on('data', data => {
+            data = iconv.decode(data, 'cp1251');
+
             if (`${data}`.includes('error')) {
                 errorMessage = data.toString().replace(/(\r\n|\n|\r)/g, ' ').replace(/.*error: (.+)VPN>.*$/, "$1").trim();
                 this.child.kill();
             }
 
-            if (`${data}`.includes('Login failed')) {
+            if (`${data}`.includes('Login failed') || `${data}`.includes('Не удалось войти в систему')) {
                 errorMessage = 'Wrong credentials';
                 this.child.kill();
             }
@@ -97,8 +100,9 @@ export class VpnService implements Settings {
         return new Promise((resolve) => {
             this.child = child_process.spawn(this.cli, ['state']);
             this.child.stdout.on('data', (data) => {
-                if (/state: Disconnected/.test(data)) resolve(false);
-                if (/state: Connected/.test(data)) resolve(true);
+                data = iconv.decode(data, 'cp1251');
+                if (/state: (Disconnected|Отключено)/.test(data)) resolve(false);
+                if (/state: (Connected|Подключено)/.test(data)) resolve(true);
             });
         })
     }
